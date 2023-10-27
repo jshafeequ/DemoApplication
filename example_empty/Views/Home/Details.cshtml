@@ -1,0 +1,72 @@
+﻿@*@model example_empty.ViewModel.HomeDetailsViewModel
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <h3>@Model.PageTitle</h3>
+
+    <div>
+        Name : @Model.Employee.Name
+    </div>
+    <div>
+        Email : @Model.Employee.Email
+    </div>
+    <div>
+        Department : @Model.Employee.Department
+    </div>
+</body>
+</html>*@
+
+
+
+@model example_empty.ViewModel.HomeDetailsViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Default";
+    var AddPhotopath = "~/images/" + (Model.Employee.AddPhotopath ?? "noimage.jpg");
+}
+<div>
+    <h1></h1>
+    @*@{
+            var employee = @ViewData["Employee"] as Demo4.Model.Employee;
+                }
+        <div>
+            Name:@employee.Name
+            </div>
+        <div>Email:@employee.Email</div>
+        <div> Department:@employee.Department</div>*@
+
+    <table>
+        <tr>
+
+            <th></th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <td> </td>
+            <td>
+                <img src=@AddPhotopath style="width:100px;height:80px" asp-append-version="true" />
+            </td>
+        </tr>
+        <tr>
+            <td> Name</td>
+            <td> @Model.Employee.Name</td>
+        </tr>
+        <tr>
+            <td> Email</td>
+            <td> @Model.Employee.Email</td>
+        </tr>
+        <tr>
+            <td> Department</td>
+            <td> @Model.Employee.Department</td>
+        </tr>
+
+    </table>
+
+
+    <a asp-controller="Home" asp-action="Index"  class="btn btn-primary" id="edit">Back</a>
+
+</div>

@@ -1,0 +1,138 @@
+﻿@*@model IEnumerable<example_empty.Models.Employee>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>
+                        @employee.Id
+                    </td>
+                    <td>
+                        @employee.Name
+                    </td>
+                    <td>
+                        @employee.Department
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>*@
+
+
+
+@model IEnumerable<example_empty.Models.Employee>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Default";
+
+}
+<div id="divdetails">
+
+    <table class="table table-sm table-bordered table-striped" id="table1">
+        <thead>
+            <tr>
+                @*<th class="centercls"> S.No </th>*@
+                <th style="display:none;"></th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Image</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int RowNo = 0;}
+            @foreach (var Emp in Model)
+            {
+                var tm = "#myModal" + Emp.Id;
+                var mid = "myModal" + Emp.Id;
+                var did = Emp.Id;
+                var AddPhotopath = "~/images/" + (Emp.AddPhotopath ?? "noimage.jpg");
+
+                <tr>
+                    @*<td class="centercls">
+                        @{RowNo++;}@RowNo
+                    </td>*@
+                    <td class="ID" style="display:none;">
+                        <span>@Emp.Id</span>
+                    </td>
+                    <td>@Emp.Name</td>
+                    <td>@Emp.Email</td>
+                    <td>@Emp.Department</td>
+                    <td><img src=@AddPhotopath style="width:100px;height:80px" asp-append-version="true" /></td>
+                    <td>
+                        <a href="@Url.Action("Details","Home",new {id=Emp.EncryptedId})" class="btn btn-primary" id="View">View</a>
+                        <a asp-controller="Home" asp-action="Edit" asp-route-id=@Emp.EncryptedId class="btn btn-primary" id="edit">Edit</a>
+                        <button type="button" class="btn btn-primary"  onclick="deleteemp(@did)" >
+                            Delete
+                        </button>
+
+                        @*<div class="modal fade delmodal" id="@mid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure want to delete this item?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" onclick="deleteemp(@did)" id="deleteBtn" class="btn bg-danger mr-1">Delete</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts{
+    <script>
+        function deleteemp(id) {
+          
+             var url1 = '@Url.Action("Delete", "Home")';
+              
+
+            var data = { id: JSON.stringify(id) };
+               $.ajax({
+                  url: url1,
+                  type: "post",
+                  contentType: 'application/x-www-form-urlencoded',
+                  data: data,
+                  success: function (result) {
+                          if (result == 1) {
+                              location.reload();
+                          }
+                  }
+              });
+        }
+    </script>
+}
+
+
+
+
+
+

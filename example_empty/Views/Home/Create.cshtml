@@ -1,0 +1,80 @@
+﻿@model example_empty.ViewModel.CreateViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //ViewData["Title"] = "Add New Employee";
+}
+
+<div id="divnew">
+    <form id="form" asp-controller="Home" asp-action="Create" method="post" enctype="multipart/form-data">
+        <section class="panel">
+            <header class="panel-heading" style="background-color:cadetblue">
+                <div class="panel-actions">
+                </div>
+                @*<h2 class="panel-title">Add Employee</h2>*@
+            </header>
+            <div class="panel-body">
+                <div class="form-group">
+
+                    <label class="col-sm-2 control-label"> Name </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="Name" id="Name" class="form-control" placeholder="" />
+                        @*<span asp-validation-for="Name" class="text-bg-danger"></span>*@
+                    </div>
+                    <label class="col-sm-2 control-label"> Email </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="Email" id="Email" class="form-control" placeholder="" />
+                        @*<span asp-validation-for="Email" class="text-bg-danger"></span>*@
+                    </div>
+
+                </div>
+                <div class="form-group ">
+                    <label asp-for="Department" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <select asp-for="Department" class="custom-select mr-sm-2"
+                                asp-items="Html.GetEnumSelectList<Dept>()"></select>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"> Photo </label>
+                    <div class="col-sm-4">
+                        <div class="custom-file">
+                            <input multiple asp-for="Photos" class="form-control custom-file-input" />
+                            @*<span asp-validation-for="Photos" class="text-bg-danger"></span>*@
+                            <label class=custom-file-label>Choose file...</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3" style="text-align:center;">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger cancel">Cancel</a>
+                    </div>
+                </div>
+            </footer>
+        </section>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+               
+                //var filename = $(this).val().split("\\").pop();
+                //$(this).next(".custom-file-label").html(filename);
+                var filelable = $(this).next(".custom-file-label");
+                var files = $(this)[0].files;
+                if (files.length > 1) {
+                    filelable.html(files.length + "files selected");
+                }
+                else if (files.length==1) {
+                    filelable.html(files[0].name);
+                }
+            });
+        });
+    </script>
+}
